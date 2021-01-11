@@ -21,21 +21,40 @@ const Header = ({headerText, goodHandler, neutralHandler, badHandler}) => {
   )
 }
 
-const Stats = ({headerText, good, neutral, bad}) => {
+
+const Stat = ({text, value}) => {
   return (
-    <>
-    <h1>{headerText}</h1>
-    <p>
-      Good {good}
-    </p>
-    <p>
-      Neutral {neutral}
-    </p>
-    <p>
-      Bad {bad}
-    </p>
-    </>
+    <tr>
+        <td>{text}</td>
+        <td>{value}</td>
+    </tr>
   )
+}
+
+const Statistics = ({headerText, good, neutral, bad}) => {
+  const sum = good + neutral + bad;
+  if(sum > 0){
+    return (
+      <>
+      <h1>{headerText}</h1>
+      <table>
+        <tbody>
+        <Stat text="Good" value={good} />
+        <Stat text="Neutral" value={neutral} />
+        <Stat text="Bad" value={bad} />
+        <Stat text="All" value={good + neutral + bad} />
+        <Stat text="Average" value={(good-bad)/(good + neutral + bad)} />
+        <Stat text="Positive Percentage" value={(((good)/ (good + neutral + bad)) * 100).toString().concat(" %")} />
+        </tbody>
+      </table>
+      </>
+    )
+  } else {
+    return (
+      <p>No Feedback Given</p>
+    )
+  }
+  
 }
 
 const App = () => {
@@ -50,7 +69,7 @@ const App = () => {
   return (
     <div>
       <Header headerText="Give Feedback" goodHandler={goodHandler} neutralHandler={neutralHandler} badHandler={badHandler} />
-      <Stats headerText="Statistics" good={good} neutral={neutral} bad={bad} />
+      <Statistics headerText="Statistics" good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
