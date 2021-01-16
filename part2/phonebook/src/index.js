@@ -29,21 +29,37 @@ const App = () => {
     setNewNumber(e.target.value)
   }
 
-  const validateName = (val) => {
-    return persons.filter(person => person.name.toLowerCase() === val.toLowerCase()).length === 0
+  const validateEntry = (name, number) => {
+    const targetPerson = persons.find(person => person.name.toLowerCase() === name.toLowerCase())
+    console.log(targetPerson)
+    if(targetPerson !== undefined){
+      if(targetPerson.number !== number){
+        const updateNumberConfirmation = window.confirm(`Do you want to update ${targetPerson.name}'s number from ${targetPerson.number} to ${number}`)
+        if(updateNumberConfirmation){
+          const updatedPerson = {...targetPerson, number: number}
+          personService.update(targetPerson.id, updatedPerson).then(result => {
+            setPersons(persons.map(person => person.id !== result.id ? person : result))
+            setNewName('')
+            setNewNumber('')
+          })
+        }
+      } else {
+        alert(`${name} already present in the phonebook with number: ${number}`)
+      }
+    } else {
+      return true
+    }
   }
 
   const submitFormHandler = (e) => {
     e.preventDefault()
-    if(validateName(newName)){
+    if(validateEntry(newName, newNumber)){
       const newData = {name: newName, number: newNumber}
       personService.create(newData).then(result => {
         setPersons(persons.concat(result))
         setNewName('')
         setNewNumber('')
       })
-    } else {
-      alert(`${newName} already added to phonebook`)
     }
   }
 
