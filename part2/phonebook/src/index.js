@@ -1,23 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import './index.css';
+import axios from 'axios';
 
 const App = () => {
-  const [persons, setPersons] = useState([{
-    name: 'John Doe',
-    number: '3432291'
-  },
-    { name: 'Arto Hellas', number: '123456' },
-    { name: 'Ada Lovelace', number: '5323523' },
-    { name: 'Dan Abramov', number: '234345' },
-    { name: 'Mary Poppen', number: '6423122' }
-  ])
+  const [persons, setPersons] = useState([])
   const [filteredPersons, setFilteredPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    setLoading(true)
+    axios.get("http://localhost:3001/persons").then(response => {
+      setPersons(response.data)
+      setLoading(false)
+    })
+  }, [])
 
   const handleContactNameChange = (e) => {
     setNewName(e.target.value)
@@ -57,7 +59,7 @@ const App = () => {
     <h1>Phone Book App</h1>
     <Filter handleSearchInput={handleSearchInput} />
     <PersonForm submitFormHandler={submitFormHandler} contactName={newName} handleContactNameChange={handleContactNameChange} handleContactNumberChange={handleContactNumberChange} contactNumber={newNumber} />
-    <Persons persons={persons} filteredPersons={filteredPersons} />
+    <Persons persons={persons} filteredPersons={filteredPersons} loadingStatus={loading} />
    </>
   )
 }

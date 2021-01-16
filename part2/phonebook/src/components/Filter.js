@@ -5,7 +5,7 @@ function Filter({handleSearchInput}) {
         <>
             <h2>Filter Contacts</h2>
             <div>
-                <input type="text" onChange={handleSearchInput} />
+                <input type="text" placeholder="Search ..." onChange={handleSearchInput} />
             </div>
         </>
     )
