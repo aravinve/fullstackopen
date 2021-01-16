@@ -5,7 +5,6 @@ import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import './index.css';
 import personService from './services/PersonsService'
-import axios from 'axios'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -16,8 +15,8 @@ const App = () => {
 
   useEffect(() => {
     setLoading(true)
-    axios.get("http://localhost:3001/persons").then(response => {
-      setPersons(response.data)
+    personService.getAll().then(result => {
+      setPersons(result)
       setLoading(false)
     })
   }, [])
@@ -38,13 +37,10 @@ const App = () => {
     e.preventDefault()
     if(validateName(newName)){
       const newData = {name: newName, number: newNumber}
-      axios.post("http://localhost:3001/persons", newData).then(response => {
-        setPersons(persons.concat(response.data))
+      personService.create(newData).then(result => {
+        setPersons(persons.concat(result))
         setNewName('')
         setNewNumber('')
-      }).catch(e => {
-        console.log(e.message)
-        alert(`${e.message} Request Failed Try Later!!`)
       })
     } else {
       alert(`${newName} already added to phonebook`)
