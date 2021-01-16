@@ -4,20 +4,62 @@ import './index.css';
 
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const initialData = Array(props.anecdotes.length).fill(0)
+  const [votes, setVotes] = useState(initialData)
+  const [popularVoteIndex, setPopularVoteIndex] = useState(0)
+  
 
   const handleClick = () => {
-    const randomNumber = Math.floor(Math.random() * anecdotes.length)
+    const randomNumber = Math.floor(Math.random() * props.anecdotes.length)
     setSelected(randomNumber)
+  }
+
+  const castVote = () => {
+    const newVotes = [...votes]
+    newVotes[selected] += 1
+    setVotes(newVotes)
+    mostPopular(newVotes)
+  }
+
+  const mostPopular = (newVotes) => {
+    let max = newVotes[popularVoteIndex];
+    newVotes.forEach((vote, index) => {
+      if(vote > max){
+        max = vote
+      }
+    })
+    setPopularVoteIndex(newVotes.indexOf(max))
   }
 
   return (
     <>
-      <h1>Anectode of the day</h1>
       <div>
-        {props.anecdotes[selected]}
+        <h1>Anectode of the day</h1>
+        <div>
+          {props.anecdotes[selected]}
+        </div>
+        <br/>
+        <div>
+          {votes[selected]} Votes
+        </div>
+        <div>
+          <button onClick={handleClick}>Next</button>
+          <button onClick={castVote}>Vote</button>
+        </div>
       </div>
       <div>
-        <button onClick={handleClick}>Next</button>
+        <h1>Most Popular Anectode</h1>
+        <div>
+            <>
+              <div>
+                {props.anecdotes[popularVoteIndex]}
+              </div>
+              <br/>
+              <div>
+                {`${votes[popularVoteIndex]} Votes`}
+              </div>
+            </>
+        </div>
       </div>
     </>
   )
