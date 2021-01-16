@@ -16,6 +16,20 @@ const App = () => {
     display: false,
     data: null
   })
+  const [weatherData, setWeatherData] = useState(null)
+
+  useEffect(() => {
+    const apiKey = process.env.REACT_APP_WEATHER_API_KEY
+    const countryName = showDetail.data !== null ? showDetail.data.name : null
+    if(countryName !== null){
+      axios.get(`http://api.weatherstack.com/current?access_key=${apiKey}&query=${countryName}`).then(response => {
+        setWeatherData(response.data)
+      })
+    } else {
+      setWeatherData(null)
+    }
+    
+  }, [showDetail])
 
   useEffect(() => {
     setLoading(true)
@@ -67,14 +81,22 @@ const App = () => {
     }
   }
 
+  const handleDetailClick = (country) => {
+    setShowDetail({
+      display: true,
+      data: country
+    })
+  }
+
   return (
    <>
     <h1>Rest Countries App</h1>
     <Filter handleSearchInput={handleSearchInput} />
     <UserAlert message={message} />
     {
-      showDetail.display && showDetail.data ? (<CountryDetail country={showDetail.data} />) : 
-      (<Countries filteredCountries={filteredCountries} loadingStatus={loading} />)
+      showDetail.display && showDetail.data ? 
+      (<CountryDetail country={showDetail.data} weatherData={weatherData} />) : 
+      (<Countries filteredCountries={filteredCountries} loadingStatus={loading} handleDetailClick={handleDetailClick} />)
     }
    </>
   )

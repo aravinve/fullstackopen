@@ -1,6 +1,6 @@
 import React from 'react'
 
-function CountryDetail({country}) {
+function CountryDetail({country, weatherData}) {
     return (
         <>
             <div>
@@ -41,6 +41,27 @@ function CountryDetail({country}) {
                 ))} 
                </ul>
             </div>
+            {weatherData && (
+                <>
+                    <div>
+                        <h4>Weather Data</h4>
+                    </div>
+                    <div>
+                        {weatherData.current.weather_icons.map((icon, index) => (
+                            <div key={index}>
+                                <img src={icon} alt="Weather Icon"/>
+                            </div>
+                        ))}
+                    </div>
+                    <div>
+                        <div>Location: {weatherData.location.name}</div>
+                        <div>Temperature: {weatherData.current.temperature}</div>
+                        <div>Humidity: {weatherData.current.humidity}</div>
+                        <div>Feels Like: {weatherData.current.feelslike}</div>
+                        <div>Wind Speed: {weatherData.current.wind_speed}</div>
+                    </div>
+                </>
+            )}
         </>
 
     )
