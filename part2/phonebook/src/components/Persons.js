@@ -1,7 +1,7 @@
 import React from 'react'
 import Person from './Person'
 
-function Persons({persons, filteredPersons, loadingStatus}) {
+function Persons({persons, filteredPersons, loadingStatus, removeContactHandler}) {
     const targetPersonArray = filteredPersons.length > 0 ? filteredPersons : persons
     return (
         <>
@@ -10,7 +10,7 @@ function Persons({persons, filteredPersons, loadingStatus}) {
                 <tbody>
                     {
                         targetPersonArray.map(person => (
-                            <Person key={person.name} person={person} />
+                            <Person key={person.name} person={person} removeContactHandler={removeContactHandler} />
                         ))
                     }
                 </tbody>

@@ -56,12 +56,21 @@ const App = () => {
     }
   }
 
+  const removeContactHandler = (personObj) => {
+    const confirmation = window.confirm(`Do you want to delete ${personObj.name}`)
+    if(confirmation){
+      personService.remove(personObj.id).then(result => {
+        setPersons(persons.filter(person => person.id !== personObj.id))
+      })
+    }
+  }
+
   return (
    <>
     <h1>Phone Book App</h1>
     <Filter handleSearchInput={handleSearchInput} />
     <PersonForm submitFormHandler={submitFormHandler} contactName={newName} handleContactNameChange={handleContactNameChange} handleContactNumberChange={handleContactNumberChange} contactNumber={newNumber} />
-    <Persons persons={persons} filteredPersons={filteredPersons} loadingStatus={loading} />
+    <Persons persons={persons} filteredPersons={filteredPersons} loadingStatus={loading} removeContactHandler={removeContactHandler} />
    </>
   )
 }
