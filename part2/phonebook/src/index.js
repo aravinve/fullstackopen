@@ -31,7 +31,6 @@ const App = () => {
 
   const validateEntry = (name, number) => {
     const targetPerson = persons.find(person => person.name.toLowerCase() === name.toLowerCase())
-    console.log(targetPerson)
     if(targetPerson !== undefined){
       if(targetPerson.number !== number){
         const updateNumberConfirmation = window.confirm(`Do you want to update ${targetPerson.name}'s number from ${targetPerson.number} to ${number}`)

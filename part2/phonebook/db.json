@@ -1,24 +1,19 @@
 {
   "persons": [
     {
-      "name": "asfaf",
-      "number": "32424",
+      "name": "John",
+      "number": "8723948",
       "id": 1
     },
     {
-      "name": "afaf",
-      "number": "234234",
+      "name": "Peter",
+      "number": "8723948",
       "id": 2
     },
     {
-      "name": "sdfhdtghrt",
-      "number": "42345",
+      "name": "Mary",
+      "number": "2834234",
       "id": 3
-    },
-    {
-      "name": "sdgsg",
-      "number": "45245",
-      "id": 4
     }
   ]
 }
