@@ -4,7 +4,8 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import './index.css';
-import axios from 'axios';
+import personService from './services/PersonsService'
+import axios from 'axios'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -36,9 +37,15 @@ const App = () => {
   const submitFormHandler = (e) => {
     e.preventDefault()
     if(validateName(newName)){
-      setPersons(persons.concat({name: newName, number: newNumber}))
-      setNewName('')
-      setNewNumber('')
+      const newData = {name: newName, number: newNumber}
+      axios.post("http://localhost:3001/persons", newData).then(response => {
+        setPersons(persons.concat(response.data))
+        setNewName('')
+        setNewNumber('')
+      }).catch(e => {
+        console.log(e.message)
+        alert(`${e.message} Request Failed Try Later!!`)
+      })
     } else {
       alert(`${newName} already added to phonebook`)
     }
