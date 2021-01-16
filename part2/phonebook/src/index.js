@@ -51,7 +51,6 @@ const App = () => {
     } else {
       setFilteredPersons([])
     }
-    
   }
 
   return (
