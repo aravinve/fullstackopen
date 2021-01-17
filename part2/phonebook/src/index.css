@@ -19,6 +19,28 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
+}
+
+.notify-bar {
+  padding: 10px;
+  margin: 2px 4px;
+  font-size: 1.4rem;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  border: 1px solid;
+  border-radius: 6px;
+}
+
+.danger {
+  background-color: #eca4a0;
+  border-color: red;
+  color: red;
+}
+
+.success {
+  background-color: #93e080;
+  border-color: green;
+  color: green;
 }

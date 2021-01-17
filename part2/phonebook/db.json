@@ -1,18 +1,8 @@
 {
   "persons": [
     {
-      "name": "John",
-      "number": "8723948",
-      "id": 1
-    },
-    {
-      "name": "Peter",
-      "number": "8723948",
-      "id": 2
-    },
-    {
-      "name": "Mary",
-      "number": "2834234",
+      "name": "Daniel",
+      "number": "8723424",
       "id": 3
     }
   ]
